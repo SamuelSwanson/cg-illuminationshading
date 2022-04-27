@@ -474,10 +474,6 @@ function createCustomVertexArray(gl, position_attrib, normal_attrib, texcoord_at
         -0.5, -0.25,  0.5,
         -0.5,  0.25,  -0.5,
         -0.5, -0.25,  -0.5,
-
-        // Reference Points on Front and Back Face
-        0.0, 0.0, 0.5,
-        0.0, 0.0, -0.5
     ];
 
     // store array of vertex positions in the vertex_position_buffer
@@ -629,8 +625,8 @@ function createCustomVertexArray(gl, position_attrib, normal_attrib, texcoord_at
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertex_index_buffer);
     // create array of vertex indices (each set of 3 represents a triangle)
     let indices = [
-         0,  1,  48,     1,  2,  48,    2, 3, 48,      3, 4, 48,       4, 5, 48,       5, 6, 48,       6, 7, 48,       7, 0, 48,      // Front
-         8, 9, 49,       9, 10, 49,     10, 11, 49,     11, 12, 49,     12, 13, 49,     13, 14, 49,     14, 15, 49,     15, 8, 49,    //Back
+         0,  1,  2,     1,  2,  0,    2, 3, 0,      3, 4, 0,       4, 5, 0,       5, 6, 0,       6, 7, 0,       7, 0, 2,      // Front
+         8, 9, 10,       9, 10, 8,     10, 11, 8,     11, 12, 8,     12, 13, 8,     13, 14, 8,     14, 15, 8,     15, 8, 10,    //Back
          16, 17, 18,     17, 18, 19,  // First
          20, 21, 22,     21, 22, 23,  // Second
          24, 25, 26,     25, 26, 27,  // Third
