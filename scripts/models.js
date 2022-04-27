@@ -395,5 +395,263 @@ function createSphereVertexArray(gl, position_attrib, normal_attrib, texcoord_at
 //         - minimum of 16 vertices
 //
 function createCustomVertexArray(gl, position_attrib, normal_attrib, texcoord_attrib) {
-    return null;
+   // create a new Vertex Array Object
+    let vertex_array = gl.createVertexArray();
+    // set newly created Vertex Array Object as the active one we are modifying
+    gl.bindVertexArray(vertex_array);
+
+    
+    // create buffer to store vertex positions (3D points)
+    let vertex_position_buffer = gl.createBuffer();
+    // set newly created buffer as the active one we are modifying
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_position_buffer);
+    // create array of 3D vertex values (each set of 3 values specifies a vertex: x, y, z)
+    let vertices = [
+        // Front face
+        -0.5, -0.25,  0.5,
+        -.25, -0.5,  0.5,
+        0.25,  -0.5,  0.5,
+        0.5,  -0.25,  0.5,
+        0.5, 0.25,  0.5,
+        0.25, 0.5,  0.5,
+        -0.25,  0.5,  0.5,
+        -0.5,  0.25,  0.5,
+
+        // Back face
+        -0.5, -0.25,  -0.5,
+        -.25, -0.5,  -0.5,
+        0.25,  -0.5,  -0.5,
+        0.5,  -0.25,  -0.5,
+        0.5, 0.25,  -0.5,
+        0.25, 0.5,  -0.5,
+        -0.25,  0.5,  -0.5,
+        -0.5,  0.25,  -0.5,
+
+        // First face
+        -0.5,  -0.25,  0.5,
+        -0.5,  -0.25,  -0.5,
+        -0.25,  -0.5, 0.5,
+        -0.25,  -0.5, -0.5,
+
+        // Second face
+        -.25, -0.5,   0.5,
+        0.25,  -0.5,  0.5,
+        -.25, -0.5,  -0.5,
+        0.25,  -0.5, -0.5,
+
+        // Third Face
+        0.25,  -0.5,  0.5,
+        0.5,  -0.25,  0.5,
+        0.25,  -0.5,  -0.5,
+        0.5,  -0.25,  -0.5,
+
+        // Fourth Face
+        0.5,  -0.25,  0.5,
+        0.5, 0.25,  0.5,
+        0.5,  -0.25,  -0.5,
+        0.5, 0.25,  -0.5,
+
+        // Fifth Face
+        0.5, 0.25,  0.5,
+        0.25, 0.5,  0.5,
+        0.5, 0.25,  -0.5,
+        0.25, 0.5,  -0.5,
+
+        // Sixth Face
+        0.25, 0.5,  0.5,
+        -0.25,  0.5,  0.5,
+        0.25, 0.5,  -0.5,
+        -0.25,  0.5,  -0.5,
+
+        // Seventh Face
+        -0.25,  0.5,  0.5,
+        -0.5,  0.25,  0.5,
+        -0.25,  0.5,  -0.5,
+        -0.5,  0.25,  -0.5,
+
+        //Eighth Face
+        -0.5,  0.25,  0.5,
+        -0.5, -0.25,  0.5,
+        -0.5,  0.25,  -0.5,
+        -0.5, -0.25,  -0.5,
+
+        // Reference Points on Front and Back Face
+        0.0, 0.0, 0.5,
+        0.0, 0.0, -0.5
+    ];
+
+    // store array of vertex positions in the vertex_position_buffer
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    // enable position_attrib in our GPU program
+    gl.enableVertexAttribArray(position_attrib);
+    // attach vertex_position_buffer to the position_attrib
+    // (as 3-component floating point values)
+    gl.vertexAttribPointer(position_attrib, 3, gl.FLOAT, false, 0, 0);
+
+
+    // create buffer to store vertex normals (vector pointing perpendicular to surface)
+    let vertex_normal_buffer = gl.createBuffer();
+    // set newly created buffer as the active one we are modifying
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_normal_buffer);
+    // create array of 3D vector values (each set of 3 values specifies a normalized vector: x, y, z)
+    let normals = [
+        // Front
+        0.0,  0.0,  1.0,
+        0.0,  0.0,  1.0,
+        0.0,  0.0,  1.0,
+        0.0,  0.0,  1.0,
+        0.0,  0.0,  1.0,
+        0.0,  0.0,  1.0,
+        0.0,  0.0,  1.0,
+        0.0,  0.0,  1.0,
+
+        // Back
+        0.0,  0.0, -1.0,
+        0.0,  0.0, -1.0,
+        0.0,  0.0, -1.0,
+        0.0,  0.0, -1.0,
+        0.0,  0.0, -1.0,
+        0.0,  0.0, -1.0,
+        0.0,  0.0, -1.0,
+        0.0,  0.0, -1.0,
+
+        // First
+        -0.5,  -0.5,  0.0,
+        -0.5,  -0.5,  0.0,
+        -0.5,  -0.5,  0.0,
+        -0.5,  -0.5,  0.0,
+
+        // Second
+        0.0, -1.0,  0.0,
+        0.0, -1.0,  0.0,
+        0.0, -1.0,  0.0,
+        0.0, -1.0,  0.0,
+
+        // Third
+        0.5, -0.5, 0.0,
+        0.5, -0.5, 0.0,
+        0.5, -0.5, 0.0,
+        0.5, -0.5, 0.0,
+
+        // Fourth
+        1.0,  0.0,  0.0,
+        1.0,  0.0,  0.0,
+        1.0,  0.0,  0.0,
+        1.0,  0.0,  0.0,
+
+        //Fifth
+        0.5, 0.5, 0.0,
+        0.5, 0.5, 0.0,
+        0.5, 0.5, 0.0,
+        0.5, 0.5, 0.0,
+
+        // Sixth
+        0.0, 1.0,  0.0,
+        0.0, 1.0,  0.0,
+        0.0, 1.0,  0.0,
+        0.0, 1.0,  0.0,
+
+        // Seventh
+        -0.5, 0.5, 0.0,
+        -0.5, 0.5, 0.0,
+        -0.5, 0.5, 0.0,
+        -0.5, 0.5, 0.0,
+
+        // Eighth
+        -1.0,  0.0,  0.0,
+        -1.0,  0.0,  0.0,
+        -1.0,  0.0,  0.0,
+        -1.0,  0.0,  0.0
+    ];
+    // store array of vertex normals in the vertex_normal_buffer
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
+    // enable normal_attrib in our GPU program
+    gl.enableVertexAttribArray(normal_attrib);
+    // attach vertex_normal_buffer to the normal_attrib
+    // (as 3-component floating point values)
+    gl.vertexAttribPointer(normal_attrib, 3, gl.FLOAT, false, 0, 0);
+
+
+    // create buffer to store texture coordinate (2D coordinates for mapping images to the surface)
+    let vertex_texcoord_buffer = gl.createBuffer();
+    // set newly created buffer as the active one we are modifying
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_texcoord_buffer);
+    // create array of 2D texture coordinate values (each set of 2 values specifies texture coordinate: u, v)
+    let texcoords = [
+        // Front
+        0.0,  0.0,
+        1.0,  0.0,
+        1.0,  1.0,
+        0.0,  1.0,
+
+        // Back
+        0.0,  0.0,
+        1.0,  0.0,
+        1.0,  1.0,
+        0.0,  1.0,
+
+        // Top
+        0.0,  0.0,
+        1.0,  0.0,
+        1.0,  1.0,
+        0.0,  1.0,
+
+        // Bottom
+        0.0,  0.0,
+        1.0,  0.0,
+        1.0,  1.0,
+        0.0,  1.0,
+
+        // Right
+        0.0,  0.0,
+        1.0,  0.0,
+        1.0,  1.0,
+        0.0,  1.0,
+
+        // Left
+        0.0,  0.0,
+        1.0,  0.0,
+        1.0,  1.0,
+        0.0,  1.0
+    ];
+    // store array of vertex texture coordinates in the vertex_texcoord_buffer
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texcoords), gl.STATIC_DRAW);
+    // enable texcoord_attrib in our GPU program
+    gl.enableVertexAttribArray(texcoord_attrib);
+    // attach vertex_texcoord_buffer to the texcoord_attrib
+    // (as 2-component floating point values)
+    gl.vertexAttribPointer(texcoord_attrib, 2, gl.FLOAT, false, 0, 0);
+
+    
+    // create buffer to store faces of the triangle
+    let vertex_index_buffer = gl.createBuffer();
+    // set newly created buffer as the active one we are modifying
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertex_index_buffer);
+    // create array of vertex indices (each set of 3 represents a triangle)
+    let indices = [
+         0,  1,  48,     1,  2,  48,    2, 3, 48,      3, 4, 48,       4, 5, 48,       5, 6, 48,       6, 7, 48,       7, 0, 48,      // Front
+         8, 9, 49,       9, 10, 49,     10, 11, 49,     11, 12, 49,     12, 13, 49,     13, 14, 49,     14, 15, 49,     15, 8, 49,    //Back
+         16, 17, 18,     17, 18, 19,  // First
+         20, 21, 22,     21, 22, 23,  // Second
+         24, 25, 26,     25, 26, 27,  // Third
+         28, 29, 30,     29, 30, 31,  // Fourth
+         32, 33, 34,     33, 34, 35,  // Fifth
+         36, 37, 38,     37, 38, 39,  // Sixth
+         40, 41, 42,     41, 42, 43,  // Seventh
+         44, 45, 46,     45, 46, 47   //Eighth
+    ];
+    // store array of vertex indices in the vertex_index_buffer
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+
+
+    // no longer modifying our Vertex Array Object, so deselect
+    gl.bindVertexArray(null);
+
+
+    // store the number of vertices used for entire model (number of faces * 3)
+    vertex_array.face_index_count = indices.length;
+
+
+    // return created Vertex Array Object
+    return vertex_array;
 }
