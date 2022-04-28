@@ -40,20 +40,20 @@ function init() {
                         rotate_y: 0,
                         rotate_z: 0
                     },
-                    // {
-                    //     type: 'custom',
-                    //     shader: 'color',
-                    //     material: {
-                    //         color: vec3.fromValues(0.1, 0.4, 0.9),  // red, green, blue
-                    //         specular: vec3.fromValues(1.0, 1.0, 1.0),  // red, green, blue
-                    //         shininess: 32
-                    //     },
-                    //     center: vec3.fromValues(0.0, 1.0, -6.0), // x, y, z
-                    //     size: vec3.fromValues(2.0, 2.0, 2.0),  // width, height, depth
-                    //     rotate_x: 0,
-                    //     rotate_y: 0,
-                    //     rotate_z: 0
-                    // }
+                    {
+                        type: 'custom',
+                        shader: 'color',
+                        material: {
+                            color: vec3.fromValues(0.1, 0.4, 0.9),  // red, green, blue
+                            specular: vec3.fromValues(1.0, 1.0, 1.0),  // red, green, blue
+                            shininess: 32
+                        },
+                        center: vec3.fromValues(0.0, 1.0, -6.0), // x, y, z
+                        size: vec3.fromValues(2.0, 2.0, 2.0),  // width, height, depth
+                        rotate_x: 0,
+                        rotate_y: 0,
+                        rotate_z: 0
+                    }
                 ],
                 light: {
                     ambient: glMatrix.vec3.fromValues(0.2, 0.2, 0.2),  // red, green, blue
@@ -61,6 +61,42 @@ function init() {
                         {
                             position: vec3.fromValues(1.5, 3.0, -4.5),  // x, y, z
                             color: vec3.fromValues(1.0, 1.0, 0.8)  // red, green, blue
+                        },
+                        {
+                            position: vec3.fromValues(-2.5, 3.0, -1.0),  // x, y, z
+                            color: vec3.fromValues(0.2, 0.2, 0.2)  // red, green, blue
+                        },
+                        {
+                            position: vec3.fromValues(2.5, 3.0, -1.0),  // x, y, z
+                            color: vec3.fromValues(0.3, 0.3, 0.3)  // red, green, blue
+                        },
+                        {
+                            position: vec3.fromValues(2.5, -3.0, -2.0),  // x, y, z
+                            color: vec3.fromValues(0.3, 0.3, 0.4)  // red, green, blue
+                        },
+                        {
+                            position: vec3.fromValues(3.5, -1.0, -3.0),  // x, y, z
+                            color: vec3.fromValues(0.5, 0.6, 0.7)  // red, green, blue
+                        },
+                        {
+                            position: vec3.fromValues(2.5, 4.0, -6.0),  // x, y, z
+                            color: vec3.fromValues(0.7, 0.9, 0.2)  // red, green, blue
+                        },
+                        {
+                            position: vec3.fromValues(-2.0, 1.0, -1.0),  // x, y, z
+                            color: vec3.fromValues(0.3, 0.2, 1.0)  // red, green, blue
+                        },
+                        {
+                            position: vec3.fromValues(-4.0, 5.0, -10.0),  // x, y, z
+                            color: vec3.fromValues(0.0, 1.0, 0.0)  // red, green, blue
+                        },
+                        {
+                            position: vec3.fromValues(1.5, 0.5, -2.0),  // x, y, z
+                            color: vec3.fromValues(1.0, 0.0, 0.2)  // red, green, blue
+                        },
+                        {
+                            position: vec3.fromValues(-1.5, 6.0, -5.0),  // x, y, z
+                            color: vec3.fromValues(0.2, 0.8, 0.9)  // red, green, blue
                         }
                     ]
                 }
