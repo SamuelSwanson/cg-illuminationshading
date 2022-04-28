@@ -186,8 +186,8 @@ class GlApp {
             //set ambient light
             this.gl.uniform3fv(this.shader[selected_shader].uniforms.light_ambient, this.scene.light.ambient);
             for(let j = 0; j < this.scene.light.point_lights.length; j ++){
-                this.gl.uniform3fv(this.shader[selected_shader].uniforms.light_position, this.scene.light.point_lights[j].position);
-                this.gl.uniform3fv(this.shader[selected_shader].uniforms.light_color, this.scene.light.point_lights[j].color);
+                this.gl.uniform3fv(this.gl.getUniformLocation(this.shader[selected_shader].program, "light_position["+j+"]"), this.scene.light.point_lights[j].position);
+                this.gl.uniform3fv(this.gl.getUniformLocation(this.shader[selected_shader].program, "light_color["+j+"]"), this.scene.light.point_lights[j].color);
             }
             
 

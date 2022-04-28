@@ -6,8 +6,8 @@ in vec3 vertex_position;
 in vec3 vertex_normal;
 
 uniform vec3 light_ambient;
-uniform vec3 light_position;
-uniform vec3 light_color;
+uniform vec3 light_position[10];
+uniform vec3 light_color[10];
 uniform vec3 camera_position;
 uniform float material_shininess; // n
 uniform mat4 model_matrix;
@@ -24,14 +24,18 @@ void main() {
     vec4 frag_pos_w = model_matrix * vec4(vertex_position, 1.0);//may be an error with this or the equation
     vec3 frag_pos = frag_pos_w.xyz;
 
-    vec3 N = normalize(frag_normal);
-    vec3 L = normalize(light_position-frag_pos);
-    float diff = max(dot(N,L), 0.0);
-    vec3 V = normalize(camera_position - frag_pos);
-    vec3 R = 2.0*(max(dot(N,L),0.0))*(N-L);
+    for(int i = 0; i<10; i++){
+        vec3 N = normalize(frag_normal);
+        vec3 L = normalize(light_position[i]-frag_pos);
+        float diff = max(dot(N,L), 0.0);
+        vec3 V = normalize(camera_position - frag_pos);
+        vec3 R = 2.0*(max(dot(N,L),0.0))*(N-L);
 
 
-    ambient = light_ambient;
-    diffuse = light_color * diff;
-    specular =light_color * pow(max(dot(R,V), 0.0),material_shininess);
+        ambient = light_ambient;
+        diffuse = diffuse + light_color[i] * diff;
+        specular =specular + light_color[i] * pow(max(dot(R,V), 0.0),material_shininess);
+    }
+
+
 }
