@@ -42,5 +42,6 @@ void main() {
         specular = specular + light_color[i] * pow(max(dot(R,V), 0.0),material_shininess);
     }
     
+    //texture_scale is never set in the js files. Need to figure out where it would go
     frag_texcoord = vertex_texcoord * texture_scale;
 }
