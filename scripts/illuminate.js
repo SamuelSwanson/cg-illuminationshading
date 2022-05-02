@@ -61,7 +61,7 @@ class GlApp {
         this.shader.gouraud_color = this.createShaderProgram(shaders[0], shaders[1]);
         this.shader.gouraud_texture = this.createShaderProgram(shaders[2], shaders[3]);
         this.shader.phong_color = this.createShaderProgram(shaders[4], shaders[5]);
-        this.shader.phone_texture = this.createShaderProgram(shaders[6], shaders[7]);
+        this.shader.phong_texture = this.createShaderProgram(shaders[6], shaders[7]);
         this.shader.emissive = this.createShaderProgram(shaders[8], shaders[9]);
 
         this.initializeGlApp();
@@ -123,12 +123,20 @@ class GlApp {
     }
 
     initializeTexture(image_url) {
-        // create a texture, and upload a temporary 1px white RGBA array [255,255,255,255]
-        let texture = this.gl.createTexture();
-
         //
         // TODO: set texture parameters and upload a temporary 1px white RGBA array [255,255,255,255]
         // 
+
+        let texture = this.gl.createTexture();
+        let tempTexel= [255,255,255,255]; //need to make the type of this array correct, do not know what it is
+
+
+        this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE ,new Uint8Array(tempTexel),);
+        this.gl.bindTexture(this.gl.TEXTURE_2D, null);
 
         // download the actual image
         let image = new Image();
@@ -140,13 +148,18 @@ class GlApp {
         image.src = image_url;
 
         return texture;
+
     }
 
     updateTexture(texture, image_element) {
         //
         // TODO: update image for specified texture
         //
+        this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, image_element);
+        this.gl.bindTexture(this.gl.TEXTURE_2D, null);
     }
+
     render() {
         // delete previous frame (reset both framebuffer and z-buffer)
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -158,7 +171,6 @@ class GlApp {
             //
             // TODO: properly select shader here
             //
-            
             let selected_shader = this.algorithm + "_" + this.scene.models[i].shader;
             this.gl.useProgram(this.shader[selected_shader].program);
 
@@ -177,10 +189,17 @@ class GlApp {
             
             //
             // TODO: bind proper texture and set uniform (if shader is a textured one)
-            //
+            //  
+            //need to do this
+            if(selected_shader=="texture"){
+                this.gl.activeTexture(gl.TEXTURE0); 
+                this.gl.bindTexture(this.gl.TEXTURE_2D, this.initializeTexture(this.scene.models[i].image_url));
+                //not sure exactly what to do with the uniform
+                this.gl.uniform1i(this.shader[selected_shader].uniforms.image, 0);
+            }
+
             this.gl.uniform3fv(this.shader[selected_shader].uniforms.material_specular, this.scene.models[i].material.specular);
             this.gl.uniform1f(this.shader[selected_shader].uniforms.material_shininess, this.scene.models[i].material.shininess);
-
 
             this.gl.uniform3fv(this.shader[selected_shader].uniforms.camera_position, this.scene.camera.position);
             //set ambient light
