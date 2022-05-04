@@ -34,7 +34,7 @@ function init() {
                             specular: vec3.fromValues(1.0, 1.0, 1.0),  // red, green, blue
                             shininess: 32
                         },
-                        center: vec3.fromValues(0.0, 1.0, -6.0), // x, y, z
+                        center: vec3.fromValues(3.0, 1.0, -16.0), // x, y, z
                         size: vec3.fromValues(2.0, 2.0, 2.0),  // width, height, depth
                         rotate_x: 0,
                         rotate_y: 0,

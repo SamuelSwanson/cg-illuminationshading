@@ -29,12 +29,16 @@ void main() {
         vec3 L = normalize(light_position[i]-frag_pos);
         float diff = max(dot(N,L), 0.0);
         vec3 V = normalize(camera_position - frag_pos);
-        vec3 R = 2.0*(max(dot(N,L),0.0))*(N-L);
+        vec3 R = 2.0*(max(dot(N,L),0.0))*N-L;
 
 
-        ambient = light_ambient;
-        diffuse = diffuse + light_color[i] * diff;
-        specular =specular + light_color[i] * pow(max(dot(R,V), 0.0),material_shininess);
+        //calculate the distance of each point light
+        float distance = length(light_position[i]-frag_pos);
+        float attenuation = 1.0/(1.0+0.1*distance+0.01*distance*distance);//clamp(1.0/distance, 0.0, 1.0);
+
+        ambient = light_ambient * attenuation;
+        diffuse = diffuse + light_color[i] * diff * attenuation;
+        specular = specular + light_color[i] * pow(max(dot(R,V), 0.0),material_shininess) * attenuation;
     }
 
 
