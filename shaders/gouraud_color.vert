@@ -30,12 +30,8 @@ void main() {
         float diff = max(dot(N,L), 0.0);
         vec3 V = normalize(camera_position - frag_pos);
         vec3 R = 2.0*(max(dot(N,L),0.0))*(N-L);
-
-
         ambient = light_ambient;
         diffuse = diffuse + light_color[i] * diff;
         specular =specular + light_color[i] * pow(max(dot(R,V), 0.0),material_shininess);
     }
-
-
 }

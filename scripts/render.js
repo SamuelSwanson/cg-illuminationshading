@@ -141,7 +141,7 @@ function init() {
     }).mount('#gui');
     glapp = new GlApp('view', 800, 600, scene.$data);
     for (let i = 0; i < scene.models.length; i++) {
-        if (scene.models[i].shader === 'texture') {
+        if (scene.models[i].shader === 'texture') { //this sets up the texture, so we reference it using id dont call this in the illuminate stuff
             scene.models[i].texture.id = glapp.initializeTexture(scene.models[i].texture.url);
         }
     }

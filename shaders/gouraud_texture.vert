@@ -22,15 +22,14 @@ out vec3 specular;
 out vec2 frag_texcoord;
 
 void main() {
-
-
     gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);
     vec3 frag_normal = normalize(mat3(transpose(inverse(model_matrix))) * vertex_normal);
-    vec4 frag_pos_w = model_matrix * vec4(vertex_position, 1.0);//may be an error with this or the equation
+    vec4 frag_pos_w = model_matrix * vec4(vertex_position, 1.0); //may be an error with this or the equation
     vec3 frag_pos = frag_pos_w.xyz;
 
-    for(int i = 0; i<10; i++){
+    for(int i = 0; i<10; i++){  //loops once for each light position
 
+        //do we need to normalize this twice?
         vec3 N = normalize(frag_normal);
         vec3 L = normalize(light_position[i]-frag_pos);
         float diff = max(dot(N,L), 0.0);
@@ -42,6 +41,6 @@ void main() {
         specular = specular + light_color[i] * pow(max(dot(R,V), 0.0),material_shininess);
     }
     
-    //texture_scale is never set in the js files. Need to figure out where it would go
-    frag_texcoord = vertex_texcoord * texture_scale;
+    //I am unclear what is going on here
+    frag_texcoord = vertex_texcoord * texture_scale;  
 }
