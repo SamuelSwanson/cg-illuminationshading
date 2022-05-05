@@ -22,6 +22,7 @@ out vec3 specular;
 out vec2 frag_texcoord;
 
 void main() {
+
     gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);
     vec3 frag_normal = normalize(mat3(transpose(inverse(model_matrix))) * vertex_normal);
     vec4 frag_pos_w = model_matrix * vec4(vertex_position, 1.0); //may be an error with this or the equation
@@ -41,6 +42,8 @@ void main() {
         specular = specular + light_color[i] * pow(max(dot(R,V), 0.0),material_shininess);
     }
     
+    //frag_texcoord = vertex_texcoord;
+
     //I am unclear what is going on here
     frag_texcoord = vertex_texcoord * texture_scale;  
 }

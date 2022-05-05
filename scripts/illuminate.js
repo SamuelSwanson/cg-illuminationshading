@@ -127,13 +127,18 @@ class GlApp {
         // TODO: set texture parameters and upload a temporary 1px white RGBA array [255,255,255,255]
         // 
         let texture = this.gl.createTexture();
-        let tempTexel= [255,255,255,255]; //need to make the type of this array correct, do not know what it is
+        let tempTexel= [255,255,255,255, 
+                        255,0,0,255, 
+                        0,255,255,255, 
+                        0,0,255,255]; //need to make the type of this array correct, do not know what it is
         this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
         this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
-        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE ,new Uint8Array(tempTexel),);     
-        
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.REPEAT);
+        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 2, 2, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE ,new Uint8Array(tempTexel));     
+        this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+
         // download the actual image
         let image = new Image();
         image.crossOrigin = 'anonymous';
@@ -152,8 +157,12 @@ class GlApp {
         // TODO: update image for specified texture
         //
         this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
-        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, image_element);
-        this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, image_element.naturalWidth,image_element.naturalHeight,0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, image_element);
+
+        console.log(this.gl.getError());
+        console.log(texture);
+        this.gl.bindTexture(this.gl.TEXTURE_2D, null); 
+        this.render();
     }
 
     render() {
@@ -191,15 +200,15 @@ class GlApp {
             texture, pass the texture scale to the shaders as a uniorm using the texture scale for the model. 
             I don't understand what the last line does but it is in the slides
             */
-            if(selected_shader=="texture"){
+            if(selected_shader=="gouraud_texture" || selected_shader=="phong_texture"){
                 //think this is where we should deal with uniform vec2 texture_scale; 
                 //texture scale is stored in the model to be rendered, texture.scale
                 //not sure about syntax on vec2.fromValues(), texture.scale is [4,4] or soemthing like that
-                this.gl.uniform2fv(this.this.shader[selected_shader].uniforms.texture_scale, vec2.fromValues(this.scene.models[i].texture.scale));
+                this.gl.uniform2fv(this.shader[selected_shader].uniforms.texture_scale, this.scene.models[i].texture.scale);
                 //this.gl.uniform2fv(this.this.shader[selected_shader].uniforms.texture_scale, vec2.fromValues([4,4]));
-                this.gl.activeTexture(gl.TEXTURE0);
+                this.gl.activeTexture(this.gl.TEXTURE0);
                 this.gl.bindTexture(this.gl.TEXTURE_2D, this.scene.models[i].texture.id);
-                //not sure exactly what this does
+                //use texture in slot 0
                 this.gl.uniform1i(this.shader[selected_shader].uniforms.image, 0);
             }
 

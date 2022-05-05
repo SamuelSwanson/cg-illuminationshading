@@ -15,11 +15,16 @@ out vec4 FragColor;
 
 void main() {
     //"material color should be coming from the image" 
-    vec3 matImage = texture(image, frag_texcoord).rgb * material_color; //this needs to be rgb so that the types of values being multiplied match
-    vec3 ambient_final = ambient * matImage;
-    vec3 diffuse_final = diffuse *  matImage;
+   
+    
+    vec3 materialImage = texture(image, frag_texcoord).rgb * material_color; //this needs to be rgb so that the types of values being multiplied match
+    vec3 ambient_final = ambient * materialImage;
+    vec3 diffuse_final = diffuse *  materialImage;
     vec3 specular_final = specular * material_specular;
     vec3 combined = ambient_final + diffuse_final + specular_final; 
+    
 
-    FragColor = vec4(combined, 1);
+    //FragColor = vec4(combined, 1.0); this is the one we are trying to get to work, combines sampled texture and lighting
+   FragColor = texture(image, frag_texcoord);
+   //FragColor= vec4(frag_texcoord,0.0, 1.0);
 }
