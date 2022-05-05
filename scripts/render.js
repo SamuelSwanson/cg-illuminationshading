@@ -34,7 +34,7 @@ function init() {
                             specular: vec3.fromValues(1.0, 1.0, 1.0),  // red, green, blue
                             shininess: 32
                         },
-                        center: vec3.fromValues(0.0, 1.0, -6.0), // x, y, z
+                        center: vec3.fromValues(3.0, 1.0, -16.0), // x, y, z
                         size: vec3.fromValues(2.0, 2.0, 2.0),  // width, height, depth
                         rotate_x: 0,
                         rotate_y: 0,
@@ -61,43 +61,39 @@ function init() {
                         {
                             position: vec3.fromValues(1.5, 3.0, -4.5),  // x, y, z
                             color: vec3.fromValues(1.0, 1.0, 0.8)  // red, green, blue
-                        },
-                        {
-                            position: vec3.fromValues(-2.5, 3.0, -1.0),  // x, y, z
-                            color: vec3.fromValues(0.2, 0.2, 0.2)  // red, green, blue
-                        },
-                        {
-                            position: vec3.fromValues(2.5, 3.0, -1.0),  // x, y, z
-                            color: vec3.fromValues(0.3, 0.3, 0.3)  // red, green, blue
-                        },
-                        {
-                            position: vec3.fromValues(2.5, -3.0, -2.0),  // x, y, z
-                            color: vec3.fromValues(0.3, 0.3, 0.4)  // red, green, blue
-                        },
-                        {
-                            position: vec3.fromValues(3.5, -1.0, -3.0),  // x, y, z
-                            color: vec3.fromValues(0.5, 0.6, 0.7)  // red, green, blue
-                        },
-                        {
-                            position: vec3.fromValues(2.5, 4.0, -6.0),  // x, y, z
-                            color: vec3.fromValues(0.7, 0.9, 0.2)  // red, green, blue
-                        },
-                        {
-                            position: vec3.fromValues(-2.0, 1.0, -1.0),  // x, y, z
-                            color: vec3.fromValues(0.3, 0.2, 1.0)  // red, green, blue
-                        },
-                        {
-                            position: vec3.fromValues(-4.0, 5.0, -10.0),  // x, y, z
-                            color: vec3.fromValues(0.0, 1.0, 0.0)  // red, green, blue
-                        },
-                        {
-                            position: vec3.fromValues(1.5, 0.5, -2.0),  // x, y, z
-                            color: vec3.fromValues(1.0, 0.0, 0.2)  // red, green, blue
-                        },
-                        {
-                            position: vec3.fromValues(-1.5, 6.0, -5.0),  // x, y, z
-                            color: vec3.fromValues(0.2, 0.8, 0.9)  // red, green, blue
-                        }
+                        }, 
+                        // {
+                        //     position: vec3.fromValues(2.5, 3.0, -1.0),  // x, y, z
+                        //     color: vec3.fromValues(0.3, 0.3, 0.3)  // red, green, blue
+                        // },
+                        // {
+                        //     position: vec3.fromValues(2.5, -3.0, -2.0),  // x, y, z
+                        //     color: vec3.fromValues(0.3, 0.3, 0.4)  // red, green, blue
+                        // },
+                        // {
+                        //     position: vec3.fromValues(3.5, -1.0, -3.0),  // x, y, z
+                        //     color: vec3.fromValues(0.5, 0.6, 0.7)  // red, green, blue
+                        // },
+                        // {
+                        //     position: vec3.fromValues(2.5, 4.0, -6.0),  // x, y, z
+                        //     color: vec3.fromValues(0.7, 0.9, 0.2)  // red, green, blue
+                        // },
+                        // {
+                        //     position: vec3.fromValues(-2.0, 1.0, -1.0),  // x, y, z
+                        //     color: vec3.fromValues(0.3, 0.2, 1.0)  // red, green, blue
+                        // },
+                        // {
+                        //     position: vec3.fromValues(-4.0, 5.0, -10.0),  // x, y, z
+                        //     color: vec3.fromValues(0.0, 1.0, 0.0)  // red, green, blue
+                        // },
+                        // {
+                        //     position: vec3.fromValues(1.5, 0.5, -2.0),  // x, y, z
+                        //     color: vec3.fromValues(1.0, 0.0, 0.2)  // red, green, blue
+                        // },
+                        // {
+                        //     position: vec3.fromValues(-1.5, 6.0, -5.0),  // x, y, z
+                        //     color: vec3.fromValues(0.2, 0.8, 0.9)  // red, green, blue
+                        // }
                     ]
                 }
             }
@@ -106,6 +102,12 @@ function init() {
             selectShadingAlgorithm() {
                 var shading_alg = document.getElementById('shading_alg');
                 glapp.setShadingAlgorithm(shading_alg.value);
+            },
+
+            selectNumLights(){
+                var num_lights_elem = document.getElementById("num_lights");
+                let num_lights = num_lights_elem.value;
+                console.log(num_lights_elem.value); //need to get at this value
             },
 
             updateLightColor(index) {
@@ -146,6 +148,7 @@ function init() {
         }
     }
 
+    document.addEventListener('click', addLights(num_lights));
     // event handler for pressing arrow keys
     document.addEventListener('keydown', onKeyDown, false);
 }
@@ -323,4 +326,113 @@ function onKeyDown(event) {
             glapp.updateScene(scene);
             break;
     }
+}
+
+
+function addLights(){
+console.log("in the add lights function");
+    switch(num_lights){ 
+        case 1: 
+        scene.light.push([
+            {
+                position: vec3.fromValues(-2.5, 3.0, -1.0),  // x, y, z
+                color: vec3.fromValues(0.2, 0.2, 0.2)  // red, green, blue
+            }]);
+            glapp.updateScene(scene);
+            break; 
+        case 2: 
+        scene.light.push([
+            {
+                position: vec3.fromValues(-2.5, 3.0, -1.0),  // x, y, z
+                color: vec3.fromValues(0.2, 0.2, 0.2)  // red, green, blue
+            },
+            {
+                    position: vec3.fromValues(2.5, 3.0, -1.0),  // x, y, z
+                    color: vec3.fromValues(0.3, 0.3, 0.3)  // red, green, blue
+            }]);
+            glapp.updateScene(scene);
+            break; 
+        case 3: 
+        scene.light.push([
+            {
+                position: vec3.fromValues(-2.5, 3.0, -1.0),  // x, y, z
+                color: vec3.fromValues(0.2, 0.2, 0.2)  // red, green, blue
+            },
+            {
+                    position: vec3.fromValues(2.5, 3.0, -1.0),  // x, y, z
+                    color: vec3.fromValues(0.3, 0.3, 0.3)  // red, green, blue
+            },
+            {
+                 position: vec3.fromValues(2.5, -3.0, -2.0),  // x, y, z
+                    color: vec3.fromValues(0.3, 0.3, 0.4)  // red, green, blue
+            }]);
+            glapp.updateScene(scene);
+            break;
+        case 4:
+            scene.light.push([
+                {
+                    position: vec3.fromValues(-2.5, 3.0, -1.0),  // x, y, z
+                    color: vec3.fromValues(0.2, 0.2, 0.2)  // red, green, blue
+                },
+                {
+                        position: vec3.fromValues(2.5, 3.0, -1.0),  // x, y, z
+                        color: vec3.fromValues(0.3, 0.3, 0.3)  // red, green, blue
+                },
+                {
+                     position: vec3.fromValues(2.5, -3.0, -2.0),  // x, y, z
+                        color: vec3.fromValues(0.3, 0.3, 0.4)  // red, green, blue
+                }, 
+                {
+                     position: vec3.fromValues(3.5, -1.0, -3.0),  // x, y, z
+                     color: vec3.fromValues(0.5, 0.6, 0.7)  // red, green, blue
+                }]);
+                glapp.updateScene(scene);
+                break; 
+
+    }
+
+    /*
+    if(num_lights <= 2){
+        scene.light.push([
+        {
+            position: vec3.fromValues(-2.5, 3.0, -1.0),  // x, y, z
+            color: vec3.fromValues(0.2, 0.2, 0.2)  // red, green, blue
+        }]);
+    }
+    // {
+    //     position: vec3.fromValues(2.5, 3.0, -1.0),  // x, y, z
+    //     color: vec3.fromValues(0.3, 0.3, 0.3)  // red, green, blue
+    // },
+
+    // {
+    //     position: vec3.fromValues(2.5, -3.0, -2.0),  // x, y, z
+    //     color: vec3.fromValues(0.3, 0.3, 0.4)  // red, green, blue
+    // },
+
+
+    // {
+    //     position: vec3.fromValues(3.5, -1.0, -3.0),  // x, y, z
+    //     color: vec3.fromValues(0.5, 0.6, 0.7)  // red, green, blue
+    // },
+    // {
+    //     position: vec3.fromValues(2.5, 4.0, -6.0),  // x, y, z
+    //     color: vec3.fromValues(0.7, 0.9, 0.2)  // red, green, blue
+    // },
+    // {
+    //     position: vec3.fromValues(-2.0, 1.0, -1.0),  // x, y, z
+    //     color: vec3.fromValues(0.3, 0.2, 1.0)  // red, green, blue
+    // },
+    // {
+    //     position: vec3.fromValues(-4.0, 5.0, -10.0),  // x, y, z
+    //     color: vec3.fromValues(0.0, 1.0, 0.0)  // red, green, blue
+    // },
+    // {
+    //     position: vec3.fromValues(1.5, 0.5, -2.0),  // x, y, z
+    //     color: vec3.fromValues(1.0, 0.0, 0.2)  // red, green, blue
+    // },
+    // {
+    //     position: vec3.fromValues(-1.5, 6.0, -5.0),  // x, y, z
+    //     color: vec3.fromValues(0.2, 0.8, 0.9)  // red, green, blue
+    // }
+    */
 }

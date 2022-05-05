@@ -29,13 +29,16 @@ void main() {
         float diff = max(dot(N,L), 0.0);
         vec3 diffuseIntensity = light_color[i] * material_color * diff;
         vec3 V = normalize(camera_position - frag_pos);
-        vec3 R = 2.0*(max(dot(N,L),0.0))*(N-L);
-
+        vec3 R = 2.0*(max(dot(N,L),0.0))*N-L;
         vec3 specularIntensity = light_color[i] * material_specular * pow(max(dot(R,V), 0.0),material_shininess);
         
-        combined = combined + diffuseIntensity + specularIntensity;
+        //calculate the distance of each point light
+        float distance = length(light_position[i]-frag_pos);
+        float attenuation = clamp(1.0/distance, 0.0, 1.0);//1.0/(1.0+0.1*distance+0.01*distance*distance);
+
+        combined = combined + (diffuseIntensity + specularIntensity + ambientIntensity)*attenuation;
     }
 
-    combined = combined + ambientIntensity;
+    //combined = combined + ambientIntensity;
     FragColor = vec4(combined, 1.0);
 }
