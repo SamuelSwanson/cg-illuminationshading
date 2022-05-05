@@ -17,9 +17,9 @@ void main() {
     //"material color should be coming from the image" 
    
     
-    vec3 materialImage = texture(image, frag_texcoord).rgb * material_color; //this needs to be rgb so that the types of values being multiplied match
-    vec3 ambient_final = ambient * materialImage;
-    vec3 diffuse_final = diffuse *  materialImage;
+    vec3 textureColor = texture(image, frag_texcoord).rgb; //this needs to be rgb so that the types of values being multiplied match
+    vec3 ambient_final = ambient * textureColor;
+    vec3 diffuse_final = diffuse *  textureColor;
     vec3 specular_final = specular * material_specular;
     vec3 combined = ambient_final + diffuse_final + specular_final; 
     

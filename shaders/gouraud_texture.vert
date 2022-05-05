@@ -7,8 +7,8 @@ in vec3 vertex_normal;
 in vec2 vertex_texcoord;
 
 uniform vec3 light_ambient;
-uniform vec3 light_position;
-uniform vec3 light_color;
+uniform vec3 light_position[10];
+uniform vec3 light_color[10];
 uniform vec3 camera_position;
 uniform float material_shininess;
 uniform vec2 texture_scale;
@@ -42,8 +42,5 @@ void main() {
         specular = specular + light_color[i] * pow(max(dot(R,V), 0.0),material_shininess);
     }
     
-    //frag_texcoord = vertex_texcoord;
-
-    //I am unclear what is going on here
     frag_texcoord = vertex_texcoord * texture_scale;  
 }
