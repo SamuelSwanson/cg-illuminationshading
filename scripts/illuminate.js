@@ -35,7 +35,8 @@ class GlApp {
         };
 
         this.scene = scene;                          // current scene to draw (list of models and lights)
-        this.algorithm = 'gouraud';                  // current shading algorithm to use for rendering
+        this.algorithm = 'gouraud';                 // current shading algorithm to use for rendering
+        this.numLights = 1;                         // number of lights set
 
 
         // download and compile shaders into GPU program
@@ -218,7 +219,7 @@ class GlApp {
             this.gl.uniform3fv(this.shader[selected_shader].uniforms.camera_position, this.scene.camera.position);
             //set ambient light
             this.gl.uniform3fv(this.shader[selected_shader].uniforms.light_ambient, this.scene.light.ambient);
-            for(let j = 0; j < this.scene.light.point_lights.length; j ++){
+            for(let j = 0; j < this.numLights; j ++){
                 this.gl.uniform3fv(this.gl.getUniformLocation(this.shader[selected_shader].program, "light_position["+j+"]"), this.scene.light.point_lights[j].position);
                 this.gl.uniform3fv(this.gl.getUniformLocation(this.shader[selected_shader].program, "light_color["+j+"]"), this.scene.light.point_lights[j].color);
             }
@@ -230,7 +231,7 @@ class GlApp {
 
 
         // draw all light sources
-        for (let i = 0; i < this.scene.light.point_lights.length; i ++) {
+        for (let i = 0; i < this.numLights; i ++) {
             this.gl.useProgram(this.shader['emissive'].program);
 
 
@@ -277,6 +278,23 @@ class GlApp {
 
         // render scene
         this.render();
+    }
+    setNumLights(numLights) {
+        // update shading algorithm
+        this.numLights = numLights;
+
+        // render scene
+        this.render();
+    }
+    resetShaders(){
+        for (let i = 0; i < this.scene.models.length; i ++) {
+            if (this.vertex_array[this.scene.models[i].type] == null) continue;
+            this.gl.useProgram(this.shader[this.algorithm + "_" + this.scene.models[i].shader].program);
+            for(let j = 0; j < 10; j ++){
+                this.gl.uniform3fv(this.gl.getUniformLocation(this.shader[this.algorithm + "_" + this.scene.models[i].shader].program, "light_position["+j+"]"), vec3.fromValues(0.0, 0.0, 0.0));
+                this.gl.uniform3fv(this.gl.getUniformLocation(this.shader[this.algorithm + "_" + this.scene.models[i].shader].program, "light_color["+j+"]"), vec3.fromValues(0.0, 0.0, 0.0));
+            }
+        }
     }
 
     getFile(url) {

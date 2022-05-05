@@ -24,7 +24,7 @@ void main() {
     vec3 combined = ambient_final + diffuse_final + specular_final; 
     
 
-    //FragColor = vec4(combined, 1.0); this is the one we are trying to get to work, combines sampled texture and lighting
-   FragColor = texture(image, frag_texcoord);
+   FragColor = vec4(combined, 1.0); //this is the one we are trying to get to work, combines sampled texture and lighting
+   //FragColor = texture(image, frag_texcoord);
    //FragColor= vec4(frag_texcoord,0.0, 1.0);
 }
