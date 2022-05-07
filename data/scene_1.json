@@ -45,7 +45,7 @@
                 "shininess": 1
             },
             "texture": {
-                "url": "images/Brick_Wall.jpg",
+                "url": "images/Floor.jpg",
                 "scale": [1, 1]
             },
             "center": [5.0, 0.0, 0.0],
