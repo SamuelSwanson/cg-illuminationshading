@@ -1,7 +1,7 @@
 {
     "background": [0.1, 0.1, 0.1],
     "camera": {
-        "position": [0.0, 12.5, 0.0],
+        "position": [0.0, 15.5, 0.0],
         "target": [0.0, 0.0, 0.0],
         "up": [-1.0, 0.0, 0.0]
     },
@@ -15,10 +15,10 @@
                 "shininess": 1
             },
             "texture": {
-                "url": "images/Checkered.jpg",
-                "scale": [4, 4]
+                "url": "images/Brick_Wall.jpg",
+                "scale": [1, 1]
             },
-            "center": [0.0, 0.0, -5.0],
+            "center": [0.0, 0.0, -4.0],
             "size": [8.0, 1.0, 8.0]
         },
         {
@@ -30,11 +30,41 @@
                 "shininess": 1
             },
             "texture": {
-                "url": "images/Checkered.jpg",
-                "scale": [4, 4]
+                "url": "images/Brick_Wall.jpg",
+                "scale": [1, 1]
             },
-            "center": [0.0, 0.0, 5.0],
+            "center": [0.0, 0.0, 4.0],
             "size": [8.0, 1.0, 8.0]
+        },
+        {
+            "type": "plane",
+            "shader": "texture",
+            "material": {
+                "color": [1.0, 1.0, 1.0],
+                "specular": [0.0, 0.0, 0.0],
+                "shininess": 1
+            },
+            "texture": {
+                "url": "images/Brick_Wall.jpg",
+                "scale": [1, 1]
+            },
+            "center": [5.0, 0.0, 0.0],
+            "size": [8.0, 1.0, 8.0]
+        },
+        {
+            "type": "cube",
+            "shader": "texture",
+            "material": {
+                "color": [0.0, 1.0, 1.0],
+                "specular": [0.0, 0.0, 0.0],
+                "shininess": 1
+            },
+            "texture": {
+                "url": "images/Crate.jpg",
+                "scale": [1, 1]
+            },
+            "center": [0.0, 5.0, 0.0],
+            "size": [2.0, 2.0, 2.0]
         },
         {
             "type": "sphere",
@@ -56,43 +86,7 @@
         "ambient": [0.15, 0.15, 0.15],
         "point_lights": [
             {
-                "position": [1.5, 3.0, 1.5],
-                "color": [1.0, 1.0, 1.0]
-            },
-            {
-                "position": [1.5, 3.0, 1.5],
-                "color": [1.0, 1.0, 1.0]
-            },
-            {
-                "position": [1.5, 3.0, 1.5],
-                "color": [1.0, 1.0, 1.0]
-            },
-            {
-                "position": [1.5, 3.0, 1.5],
-                "color": [1.0, 1.0, 1.0]
-            },
-            {
-                "position": [1.5, 3.0, 1.5],
-                "color": [1.0, 1.0, 1.0]
-            }, 
-            {
-                "position": [1.5, 3.0, 1.5],
-                "color": [1.0, 1.0, 1.0]
-            },
-            {
-                "position": [1.5, 3.0, 1.5],
-                "color": [1.0, 1.0, 1.0]
-            },
-            {
-                "position": [1.5, 3.0, 1.5],
-                "color": [1.0, 1.0, 1.0]
-            },
-            {
-                "position": [1.5, 3.0, 1.5],
-                "color": [1.0, 1.0, 1.0]
-            },
-            {
-                "position": [1.5, 3.0, 1.5],
+                "position": [1.5, 7.0, 1.5],
                 "color": [1.0, 1.0, 1.0]
             }
         ]
