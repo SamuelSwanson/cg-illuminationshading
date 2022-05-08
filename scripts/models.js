@@ -90,6 +90,7 @@ function createPlaneVertexArray(gl, position_attrib, normal_attrib, texcoord_att
 }
 
 
+
 function createCubeVertexArray(gl, position_attrib, normal_attrib, texcoord_attrib) {
     // create a new Vertex Array Object
     let vertex_array = gl.createVertexArray();
